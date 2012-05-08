@@ -18,12 +18,15 @@
 (defn range-data [dataset gt lt]
   (with-data dataset (->
                       ($where
-                       {:Seconds {:$lt lt :$gt gt }}))))
+                       {:Seconds {:$lte lt :$gte gt }}))))
 
 ;; Ranges we're looking to gather histograms from
-(def ranges [[-100 0] [0 20] [20 100] [100 1000] [1000 500000] [500000 3000000] ] )
+(def ranges [[-100 0] [0 20] [20 100] [100 1000] [1000 100000] [100000 500000] [500000 3000000] ] )
 
 ;; map over all of the range options, displaying a histogram for each
 (map
  (fn [[gt lt]] (show-histogram (range-data data gt lt)))
  ranges)
+
+;; Calculate standard deviation for dataset
+;; (sd ($ data))
